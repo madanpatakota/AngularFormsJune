@@ -3,16 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent  } from './app.component';
 
-import  { FormsModule } from '@angular/forms';
+import  { FormsModule , ReactiveFormsModule } from '@angular/forms';
+import { ReactiveApproachComponent } from './reactive-approach/reactive-approach.component';
 //  i am importing the formmodule class from the @angular forms package.
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReactiveApproachComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

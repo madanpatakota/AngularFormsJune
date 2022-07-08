@@ -1,0 +1,93 @@
+<div style="margin-top: 20px; padding: 20px">
+  <form>
+    <div [formGroup]="customersFormGroup">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="TestId">Name</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="TestId"
+            name="UserName"
+            placeholder="User Name"
+            [formControlName]="'UserName'"
+        
+          />
+        </div>
+      </div>
+
+      <div style="margin-top: 10px" class="form-group row">
+        <label class="col-sm-2 col-form-label" for="Developers"
+          >Developer</label
+        >
+        <div class="col-sm-10">
+          <select
+            class="form-control"
+            name="modDeveloper"
+            [formControlName]="'modDeveloper'"
+          >
+            <option [value]="item.Id" *ngFor="let item of TeamList">
+              {{ item.Name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div  style="margin-top: 10px" [formGroupName]="'commentsGroup'">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Technical comments</label>
+          <div class="col-sm-10">
+            <textarea
+              class="form-control"
+              rows="3"
+              name="modComments"
+              [formControlName]="'modComments'"
+            >
+            </textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 10px" class="form-group row">
+          <label class="col-sm-2 col-form-label">Review *</label>
+          <div class="col-sm-10">
+            <textarea
+              class="form-control"
+              rows="3"
+              name="modReview"
+              [formControlName]="'modRevieew'"
+            >
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<hr />
+<div style="margin-right:25px">
+  <button class="btn btn-primary" (click)="evtSubmit()">Submit</button>
+  |
+  <button class="btn btn-secondary">Set value</button>
+
+  |
+  <button class="btn btn-danger">Patch value</button>
+
+  |
+  <button class="btn btn-danger">Reset</button>
+</div>
+
+<!-- object i will configure over here -->
+
+<!-- 
+Reactive appraoch:
+1. we have to write form related things by using the programme
+2.  i mean i am writing the form object program. -->
+
+<!-- object and sync ts and html -->
+
+<!-- form group notthing but collection of formcontrols -->
+
+<!-- 
+1. i have created the one form group
+2 and then i sync that form group into the my html -->
