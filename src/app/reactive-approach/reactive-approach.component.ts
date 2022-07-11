@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-approach',
@@ -43,21 +43,53 @@ export class ReactiveApproachComponent {
 
   // one small object
   ngOnInit(): void {
-    // therory : whenever my component is loading
+    // therory : whenever my component is initlizing
     // i am creting the fromgroup and i am insertinv the
     // fromcontrol
+    // can we group and form control 
+
+    // userNames : arrayformcontrol
+
+    // can i create array of controls 
+
+    // formarray
 
     this.customersFormGroup = new FormGroup({
-      UserName: new FormControl('Madan'),
-      modDeveloper: new FormControl(2),
+      UserName: new FormControl('',[Validators.required]),
+      modDeveloper: new FormControl('',Validators.required),
       commentsGroup: new FormGroup({
-        modComments: new FormControl('Test comments'),
-        modRevieew: new FormControl('Test Review'),
+        modComments: new FormControl('',Validators.required),
+        modRevieew: new FormControl('',Validators.required),
+        InvalidComments : new FormGroup({
+
+        }),
+        validComments : new FormGroup({
+          
+        })
       }),
+      Locations : new FormArray([new FormControl('Bangolore')])
     });
   }
+
+  // i will take the one button say that add Location button
+  // when i click on the add Location button i will add the locaiton 
+  // form control within it
 
   evtSubmit(){
     console.log(this.customersFormGroup);
   }
+
+  evtAddLocation(){
+       const LocatinFormControl = new FormControl("Default City");
+       const FormLocationArray  =
+         (this.customersFormGroup.get("LocaTIOns")) as FormArray;
+         // inserting the formcontrol into the formarray..
+         FormLocationArray.push(LocatinFormControl);
+  }
+
+
+
+
+
+  
 }

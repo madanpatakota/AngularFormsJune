@@ -11,14 +11,22 @@
             name="UserName"
             placeholder="User Name"
             [formControlName]="'UserName'"
-        
           />
+          <span
+            style="color: red"
+            *ngIf="
+              customersFormGroup.get('UserName').touched &&
+              customersFormGroup.get('UserName').invalid
+            "
+          >
+            Please enter the UserName
+          </span>
         </div>
       </div>
 
       <div style="margin-top: 10px" class="form-group row">
         <label class="col-sm-2 col-form-label" for="Developers"
-          >Developer</label
+          >* Developer</label
         >
         <div class="col-sm-10">
           <select
@@ -30,12 +38,21 @@
               {{ item.Name }}
             </option>
           </select>
+          <span
+            style="color: red"
+            *ngIf="
+              customersFormGroup.get('modDeveloper').touched &&
+              customersFormGroup.get('modDeveloper').invalid
+            "
+          >
+            Please enter the Developer
+          </span>
         </div>
       </div>
 
-      <div  style="margin-top: 10px" [formGroupName]="'commentsGroup'">
+      <div style="margin-top: 10px" [formGroupName]="'commentsGroup'">
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Technical comments</label>
+          <label class="col-sm-2 col-form-label"> Technical comments</label>
           <div class="col-sm-10">
             <textarea
               class="form-control"
@@ -44,6 +61,15 @@
               [formControlName]="'modComments'"
             >
             </textarea>
+            <span
+              style="color: red"
+              *ngIf="
+                customersFormGroup.get('commentsGroup.modComments').touched &&
+                customersFormGroup.get('commentsGroup.modComments').invalid
+              "
+            >
+              Please enter the Comments
+            </span>
           </div>
         </div>
 
@@ -57,7 +83,42 @@
               [formControlName]="'modRevieew'"
             >
             </textarea>
+            <span
+              style="color: red"
+              *ngIf="
+                customersFormGroup.get('commentsGroup.modRevieew').touched &&
+                customersFormGroup.get('commentsGroup.modRevieew').invalid
+              "
+            >
+              Please enter the Review
+            </span>
           </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px" class="form-group row">
+        <label class="col-sm-2 col-form-label" for="LocationID"
+          >Locations</label
+        >
+        <div [formArrayName]="'Locations'" class="col-sm-3">
+          <div *ngFor="let item of 
+               customersFormGroup.get('Locations')['controls'];
+               let $index=index">
+            <input
+              style="margin-top:10px"
+              type="text"
+              class="form-control"
+              id="LocationID"
+              name="Location"
+              placeholder="Add Location"
+              [formControlName]="$index"
+            />
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <button (click)="evtAddLocation()" class="btn btn-primary">
+            Add
+          </button>
         </div>
       </div>
     </div>
@@ -65,8 +126,14 @@
 </div>
 
 <hr />
-<div style="margin-right:25px">
-  <button class="btn btn-primary" (click)="evtSubmit()">Submit</button>
+<div style="margin-right: 30px">
+  <button
+    [disabled]="customersFormGroup.invalid"
+    class="btn btn-primary"
+    (click)="evtSubmit()"
+  >
+    Submit
+  </button>
   |
   <button class="btn btn-secondary">Set value</button>
 
@@ -76,6 +143,8 @@
   |
   <button class="btn btn-danger">Reset</button>
 </div>
+
+<div></div>
 
 <!-- object i will configure over here -->
 

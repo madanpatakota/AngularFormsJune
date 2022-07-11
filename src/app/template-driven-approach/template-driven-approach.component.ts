@@ -43,7 +43,7 @@ export class TemplateDrivenApproachComponent{
 
 
   evtSubmit(){
-    console.log(this._modForm)
+    console.log(this._modForm)  // 2 hours
     ////******** this is highly recommndation....... */
 
 
