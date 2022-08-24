@@ -1,5 +1,13 @@
 <div style="margin-top: 20px; padding: 20px">
+
+  
+
+
   <form>
+    <!-- <input type="text" 
+    [formControlName]="'sampleFormControl'" /> -->
+
+
     <div [formGroup]="customersFormGroup">
       <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="TestId">Name</label>
@@ -12,14 +20,30 @@
             placeholder="User Name"
             [formControlName]="'UserName'"
           />
+          <!-- //customersFormGroup.get('UserName').invalid && -->
+          <!-- touched: true
+value: "John" -->
           <span
             style="color: red"
             *ngIf="
               customersFormGroup.get('UserName').touched &&
-              customersFormGroup.get('UserName').invalid
+              customersFormGroup.get('UserName').value.length == 0
             "
           >
             Please enter the UserName
+          </span>
+          <!-- null?.something --> 
+          <!-- undefined -->
+
+          <!-- null.something --> 
+          <!-- VM59523:1 Uncaught TypeError: Cannot read properties of null (reading 'something')
+    at <anonymous>:1:6 -->
+          <span
+            style="color: red"
+            *ngIf="
+              customersFormGroup.get('UserName')['errors']?.['invalidName']"
+          >
+            Please do't enter the John Name
           </span>
         </div>
       </div>
@@ -101,11 +125,14 @@
           >Locations</label
         >
         <div [formArrayName]="'Locations'" class="col-sm-3">
-          <div *ngFor="let item of 
-               customersFormGroup.get('Locations')['controls'];
-               let $index=index">
-            <input
-              style="margin-top:10px"
+          <div
+            *ngFor="
+              let item of 
+              customersFormGroup.get('Locations')['controls'];
+              let $index = index"
+          >
+            {{$index}} <input
+              style="margin-top: 10px"
               type="text"
               class="form-control"
               id="LocationID"
@@ -113,11 +140,18 @@
               placeholder="Add Location"
               [formControlName]="$index"
             />
+
+            <!-- customersFormGroup.get('Locations')['controls'][index].touched -->
+            <span *ngIf="customersFormGroup.get('Locations')['controls'][$index].touched 
+                          && customersFormGroup.get('Locations')['controls'][$index].invalid" 
+            style="color: red">
+              Please enter the Location
+            </span>
           </div>
         </div>
         <div class="col-sm-2">
-          <button (click)="evtAddLocation()" class="btn btn-primary">
-            Add
+          <button [disabled]="customersFormGroup.get('Locations').invalid" (click)="evtAddLocation()" class="btn btn-primary">
+            +
           </button>
         </div>
       </div>
@@ -127,8 +161,9 @@
 
 <hr />
 <div style="margin-right: 30px">
+  <!-- [disabled]="customersFormGroup.invalid" -->
   <button
-    [disabled]="customersFormGroup.invalid"
+    
     class="btn btn-primary"
     (click)="evtSubmit()"
   >

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-approach',
@@ -17,6 +17,8 @@ export class ReactiveApproachComponent {
   // tslint:disable-next-line: whitespace
 
   customersFormGroup: any;
+
+  sampleFormControl : any;
 
   TeamList: any = [
     {
@@ -54,10 +56,17 @@ export class ReactiveApproachComponent {
 
     // formarray
 
+
+    //this.sampleFormControl = new FormControl();
+
+
     this.customersFormGroup = new FormGroup({
-      UserName: new FormControl('',[Validators.required]),
-      modDeveloper: new FormControl('',Validators.required),
-      commentsGroup: new FormGroup({
+      UserName: new FormControl('',
+      [ Validators.required,
+        this.avoidNameValidator]
+        ),
+        modDeveloper: new FormControl('',Validators.required),
+        commentsGroup: new FormGroup({
         modComments: new FormControl('',Validators.required),
         modRevieew: new FormControl('',Validators.required),
         InvalidComments : new FormGroup({
@@ -67,7 +76,7 @@ export class ReactiveApproachComponent {
           
         })
       }),
-      Locations : new FormArray([new FormControl('Bangolore')])
+      Locations : new FormArray([new FormControl('',Validators.required)])
     });
   }
 
@@ -80,12 +89,45 @@ export class ReactiveApproachComponent {
   }
 
   evtAddLocation(){
-       const LocatinFormControl = new FormControl("Default City");
+       const LocatinFormControl = new FormControl("",Validators.required);
        const FormLocationArray  =
-         (this.customersFormGroup.get("LocaTIOns")) as FormArray;
+         (this.customersFormGroup.get("Locations")) as FormArray;
          // inserting the formcontrol into the formarray..
          FormLocationArray.push(LocatinFormControl);
   }
+
+
+  //formcontrol
+
+  //control: AbstractControl ==> UserName: new FormControl('',[Validators.required,this.avoidNameValidator])
+  //,
+
+  //invalid touched untouched valid pristine dirty
+
+  avoidNameValidator(control: AbstractControl):ValidationErrors|null{
+    console.log(control.value);  //== "Name"
+    //javascript
+    // let name = "abc";
+    // name.indexOf("d") => -1
+    if(control.value.indexOf("John") > -1){
+        return {invalidName:true};
+    }
+    else{
+      return null;
+    }
+  }
+
+
+  avoidGmailValidator(control: AbstractControl):ValidationErrors|null{
+    if(control.value.indexOf("John") > -1){
+        return {invalidName:true};
+    }
+    else{
+      return null;
+    }
+  }
+
+
 
 
 
